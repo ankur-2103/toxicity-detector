@@ -19,24 +19,24 @@ bot.use((ctx) => {
                 text: ctx.message.text
             },
             requestedAttributes: {
-          TOXICITY: {},
-        },
-    };
+                TOXICITY: {},
+            },
+        };
     
-    client.comments.analyze(
-        {
-            key: API_KEY,
-            resource: analyzeRequest,
-        },
-        (err, response) => {
-            if (err) throw err;
-            if( (JSON.stringify(response.data.attributeScores.TOXICITY.summaryScore.value, null, 2)) > 0.7){
-                ctx.deleteMessage(ctx.message.message_id);
-                ctx.reply("This message was deleted by BOT!!");
-            }
-          });
+        client.comments.analyze(
+            {
+                key: API_KEY,
+                resource: analyzeRequest,
+            },
+            (err, response) => {
+                if (err) throw err;
+                if( (JSON.stringify(response.data.attributeScores.TOXICITY.summaryScore.value, null, 2)) > 0.7){
+                    ctx.deleteMessage(ctx.message.message_id);
+                    ctx.reply("This message was deleted by BOT!!");
+                }
+            });
     })
-        .catch(err => {
+    .catch(err => {
         console.log(err)
     });
 });
